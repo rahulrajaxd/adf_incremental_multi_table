@@ -1,0 +1,24 @@
+{
+	"name": "ds_Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_raw_adls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
