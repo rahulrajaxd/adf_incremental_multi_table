@@ -29,10 +29,6 @@
 				"type": "datetime2",
 				"scale": 3
 			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "Watermark_Control"
-		}
+		]
 	}
 }
