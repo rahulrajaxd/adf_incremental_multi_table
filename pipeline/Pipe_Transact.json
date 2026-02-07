@@ -177,6 +177,72 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "COPY_Update_Watermark",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "COPY_Incremental_Data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT\n  'Pipe_Transact' AS PipelineName,\n  '@{item().TableName}' AS TableName,\n  '@{activity('Lookup_LatestLoad').output.firstRow.LatestLoadDate}' AS LastLoadDate;",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "upsert",
+									"upsertSettings": {
+										"useTempDB": true,
+										"keys": [
+											"PipelineName",
+											"TableName",
+											"LastLoadDate"
+										]
+									},
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_watermarktbl",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_watermarktbl",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
