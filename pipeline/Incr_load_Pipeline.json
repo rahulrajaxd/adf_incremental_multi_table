@@ -81,8 +81,8 @@
 				}
 			},
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "ForEach2",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "ForEach1",
@@ -91,57 +91,84 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "SELECT *\nFROM @{dataset().SchemaName}.@{dataset().TableName}\nWHERE txn_ts > '@{activity('Lookup_Last_Watermark').output.firstRow.last_watermark}'",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"items": {
+						"value": "@activity('Lookup_Table_List').output.value\n",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "JsonSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "JsonWriteSettings"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "AzureSqlTable2",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": {
-								"value": "dataset.schema_name",
-								"type": "Expression"
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
 							},
-							"TableName": {
-								"value": "dataset.TableName",
-								"type": "Expression"
-							}
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderStoredProcedureName": "[dbo].[sp_get_incremental_data]",
+									"storedProcedureParameters": {
+										"LastWatermark": {
+											"type": "DateTime",
+											"value": "@{activity('Lookup_Last_Watermark').output.firstRow.last_watermark}"
+										},
+										"SchemaName": {
+											"type": "String",
+											"value": "@{item().schema_name}"
+										},
+										"TableName": {
+											"type": "String",
+											"value": "@{item().table_name}"
+										}
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSqlTable4",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Parquet1",
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "@{item().schema_name}",
+										"TableName": "@{item().table_name}"
+									}
+								}
+							]
 						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Json1",
-						"type": "DatasetReference"
-					}
-				]
+					]
+				}
 			}
 		],
 		"annotations": []
