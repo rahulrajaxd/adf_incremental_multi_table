@@ -1,0 +1,9 @@
+{
+	"name": "adf-incremental-multi",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "728ce691-34b2-45e5-a911-fa4131de78c7",
+		"tenantId": "e26ef84c-7585-45f7-8fd5-04ebd6c4f12a"
+	}
+}
