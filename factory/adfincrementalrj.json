@@ -1,0 +1,9 @@
+{
+	"name": "adfincrementalrj",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "84827a01-660e-46a1-bd03-ad7e8875df0d",
+		"tenantId": "e26ef84c-7585-45f7-8fd5-04ebd6c4f12a"
+	}
+}
