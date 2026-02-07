@@ -1,0 +1,16 @@
+{
+	"name": "ds_watermarktbl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Watermark_Control_Tbl"
+		}
+	}
+}
