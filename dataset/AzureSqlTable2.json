@@ -6,15 +6,33 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Schemaname": {
+			"SchemaName": {
 				"type": "string"
 			},
-			"Tablename": {
+			"TableName": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [
+			{
+				"name": "schema_name",
+				"type": "varchar"
+			},
+			{
+				"name": "table_name",
+				"type": "varchar"
+			},
+			{
+				"name": "last_watermark",
+				"type": "datetime2",
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Watermark_Control"
+		}
 	}
 }
