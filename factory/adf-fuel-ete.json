@@ -1,0 +1,9 @@
+{
+	"name": "adf-fuel-ete",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "752a8653-83e9-41f8-91ee-c9987804bce9",
+		"tenantId": "34785b19-1cc9-44dc-8a53-1cb724e62f2f"
+	}
+}
