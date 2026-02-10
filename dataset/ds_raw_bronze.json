@@ -1,8 +1,8 @@
 {
-	"name": "ds_Parquet1",
+	"name": "ds_raw_bronze",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_raw_adls",
+			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -15,7 +15,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "raw"
+				"fileSystem": "bronze"
 			},
 			"compressionCodec": "snappy"
 		},

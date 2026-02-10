@@ -1,5 +1,5 @@
 {
-	"name": "Pipe_Transact",
+	"name": "Bronze Layer",
 	"properties": {
 		"activities": [
 			{
@@ -25,7 +25,7 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "ds_watermarktbl",
+						"referenceName": "ds_watermark_table",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -72,7 +72,7 @@
 									"partitionOption": "None"
 								},
 								"dataset": {
-									"referenceName": "ds_watermarktbl",
+									"referenceName": "ds_watermark_table",
 									"type": "DatasetReference"
 								}
 							}
@@ -100,7 +100,7 @@
 									"partitionOption": "None"
 								},
 								"dataset": {
-									"referenceName": "ds_watermarktbl",
+									"referenceName": "ds_watermark_table",
 									"type": "DatasetReference"
 								}
 							}
@@ -161,13 +161,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ds_watermarktbl",
+									"referenceName": "ds_watermark_table",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_Parquet1",
+									"referenceName": "ds_raw_bronze",
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
@@ -233,13 +233,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ds_watermarktbl",
+									"referenceName": "ds_watermark_table",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_watermarktbl",
+									"referenceName": "ds_watermark_table",
 									"type": "DatasetReference"
 								}
 							]
